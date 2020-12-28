@@ -68,7 +68,7 @@ public class PrinterService {
 
     public void print(String text) throws UnsupportedEncodingException {
         // TODO: get rid of GBK default!
-        write(text.getBytes("GBK"));
+        write(text.getBytes("TIS620"));
     }
 
     public void printLn(String text) throws UnsupportedEncodingException {
