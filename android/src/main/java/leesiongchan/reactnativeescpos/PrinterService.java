@@ -191,7 +191,7 @@ public class PrinterService {
     }
 
     public void printImage(Bitmap image) throws IOException {
-        image = EscPosHelper.resizeImage(image, printingWidth - DEFAULT_IMG_WIDTH_OFFSET, DEFAULT_IMG_MAX_HEIGHT);
+        image = EscPosHelper.resizeImage(image, printingWidth - DEFAULT_IMG_WIDTH_OFFSET, 500);
         ByteArrayOutputStream baos = generateImageByteArrayOutputStream(image);
         write(baos.toByteArray());
     }
@@ -302,11 +302,10 @@ public class PrinterService {
                     }
                     imageToWrite = generateImageByteArrayOutputStream(
                         EscPosHelper.resizeImage(
-                            //readImage(line.replaceAll(".*\\{IMG\\[(.+)\\]\\}.*", "$1"), context), 
-                            getBitmapFromURL(line.replaceAll(".*\\{IMG\\[(.+)\\]\\}.*", "$1")),
+                            readImage(line.replaceAll(".*\\{IMG\\[(.+)\\]\\}.*", "$1"), context), 
+                            //getBitmapFromURL(line.replaceAll(".*\\{IMG\\[(.+)\\]\\}.*", "$1")),
                             Math.max(printingWidth - Math.abs(offset), 0), 
-                            500
-                            //DEFAULT_IMG_MAX_HEIGHT
+                            DEFAULT_IMG_MAX_HEIGHT
                         )
                     ).toByteArray();
                 } catch (IOException e) {
