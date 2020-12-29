@@ -305,7 +305,8 @@ public class PrinterService {
                             //readImage(line.replaceAll(".*\\{IMG\\[(.+)\\]\\}.*", "$1"), context), 
                             getBitmapFromURL(line.replaceAll(".*\\{IMG\\[(.+)\\]\\}.*", "$1")),
                             Math.max(printingWidth - Math.abs(offset), 0), 
-                            DEFAULT_IMG_MAX_HEIGHT
+                            500
+                            //DEFAULT_IMG_MAX_HEIGHT
                         )
                     ).toByteArray();
                 } catch (IOException e) {
