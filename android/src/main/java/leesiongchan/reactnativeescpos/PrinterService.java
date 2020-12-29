@@ -304,7 +304,8 @@ public class PrinterService {
                     }
                     imageToWrite = generateImageByteArrayOutputStream(
                         EscPosHelper.resizeImage(
-                            readImage(line.replaceAll(".*\\{IMG\\[(.+)\\]\\}.*", "$1"), context), 
+                            //readImage(line.replaceAll(".*\\{IMG\\[(.+)\\]\\}.*", "$1"), context), 
+                            getBitmapFromURL(filePath),
                             Math.max(printingWidth - Math.abs(offset), 0), 
                             DEFAULT_IMG_MAX_HEIGHT
                         )
