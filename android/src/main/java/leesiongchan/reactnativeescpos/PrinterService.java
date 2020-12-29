@@ -41,7 +41,7 @@ public class PrinterService {
     private static final String CARRIAGE_RETURN = System.getProperty("line.separator");
     private LayoutBuilder layoutBuilder = new LayoutBuilder();
     private final int DEFAULT_QR_CODE_SIZE = 200;
-    private final int DEFAULT_IMG_MAX_HEIGHT = 200;
+    private final int DEFAULT_IMG_MAX_HEIGHT = 500;
     private final int DEFAULT_IMG_WIDTH_OFFSET = 0;
 
     private final int DEFAULT_BAR_CODE_HEIGHT = 120;
@@ -94,6 +94,10 @@ public class PrinterService {
         this.charSet = charSet;
     }
 
+    public void setCenter() {
+        write(TXT_ALIGN_CT);
+    }
+
     public void print(String text) throws UnsupportedEncodingException {
         // TODO: get rid of GBK default!
         //byte[] thaiCharCode = new byte[] { 0x1b, 0x74, -1 };    // -1 equals to 255
@@ -122,7 +126,7 @@ public class PrinterService {
     }
 
     public void printBarcode(String str, int nType, int nWidthX, int nHeight, int nHriFontType, int nHriFontPosition) {
-        byte[] printerBarcode = PrinterCommand.getBarCodeCommand(str,nType,nWidthX,nHeight,nHriFontType,nHriFontPosition);
+        byte[] printerBarcode = PrinterCommand.getBarCodeCommand(str,nType,nWidthX,nHeight,nHriFontType,nHriFontPosition,this.charSet);
         basePrinterService.write(printerBarcode);
     }
 
@@ -288,7 +292,7 @@ public class PrinterService {
                 }
             }
             if (line.matches(".*\\{BC\\[(.+)\\]\\}.*")) {
-                bcToWrite = PrinterCommand.getBarCodeCommand(line.replaceAll(".*\\{BC\\[(.+)\\]\\}.*", "$1"),DEFAULT_BAR_CODE_FORMAT,DEFAULT_BAR_CODE_WIDTH,DEFAULT_BAR_CODE_HEIGHT,DEFAULT_BAR_CODE_FONT,DEFAULT_BAR_CODE_POSITION);
+                bcToWrite = PrinterCommand.getBarCodeCommand(line.replaceAll(".*\\{BC\\[(.+)\\]\\}.*", "$1"),DEFAULT_BAR_CODE_FORMAT,DEFAULT_BAR_CODE_WIDTH,DEFAULT_BAR_CODE_HEIGHT,DEFAULT_BAR_CODE_FONT,DEFAULT_BAR_CODE_POSITION,this.charSet);
             }
 
             String imgRegex = ".*\\{IMG\\[(.+)\\](?:\\}|:(\\d+)\\}).*";

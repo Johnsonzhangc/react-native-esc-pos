@@ -17,7 +17,7 @@ public class PrinterCommand {
      * http://www.sam4s.co.kr/_common/ac_downFile.asp?f_url=/files/DOWN/2019012393432_1.pdf&f_name=SAM4S%20Printer%20Control%20Command%20Manual%20REV1_8.pdf (Page 71)
      * https://github.com/januslo/react-native-bluetooth-escpos-printer/blob/master/android/src/main/java/cn/jystudio/bluetooth/escpos/command/sdk/PrinterCommand.java
      */
-    public static byte[] getBarCodeCommand(String str, int nType, int nWidthX, int nHeight, int nHriFontType, int nHriFontPosition) {
+    public static byte[] getBarCodeCommand(String str, int nType, int nWidthX, int nHeight, int nHriFontType, int nHriFontPosition, String charSet) {
 
         if (nType < 0x41 | nType > 0x49 | nWidthX < 2 | nWidthX > 6
                 | nHeight < 1 | nHeight > 255 | str.length() == 0)
@@ -26,7 +26,7 @@ public class PrinterCommand {
         byte[] bCodeData = null;
         try {
             // TODO: get rid of GBK default!
-            bCodeData = str.getBytes("CP874");
+            bCodeData = str.getBytes(charSet);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

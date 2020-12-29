@@ -348,6 +348,16 @@ public class EscPosModule extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
+    public void setTextAlignment(String align, Promise promise) {
+        try {
+            printerService.setCenter();
+            promise.resolve(true);
+        } catch(Exception e) {
+            promise.reject(e);
+        }
+    }
+
     /**
      * Bluetooth Connection Event Listener
      */
