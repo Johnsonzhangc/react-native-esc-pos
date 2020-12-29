@@ -6,6 +6,7 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.google.zxing.BarcodeFormat;
@@ -23,6 +24,10 @@ import java.io.UnsupportedEncodingException;
 import java.lang.Math;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Arrays;
+import java.net.HttpURLConnection;
+import java.io.InputStream;
+import java.net.URL;
 
 import leesiongchan.reactnativeescpos.command.PrinterCommand;
 import leesiongchan.reactnativeescpos.helpers.EscPosHelper;
@@ -45,6 +50,8 @@ public class PrinterService {
     private final int DEFAULT_BAR_CODE_FONT = 0;
     private final int DEFAULT_BAR_CODE_POSITION = 2;
 
+    private String charSet = "UTF-8";
+
     private int printingWidth = PRINTING_WIDTH_58_MM;
     private io.github.escposjava.PrinterService basePrinterService;
     private ReactApplicationContext context;
@@ -66,9 +73,33 @@ public class PrinterService {
         basePrinterService.cutFull();
     }
 
+    public void enableChineseMode(boolean enable) {
+        byte[] chineseMode = new byte[] { 0x1c, 0x26 };
+        byte[] nonChineseMode = new byte[] { 0x1c, 0x2e };
+        if(enable) {
+            write(chineseMode);
+        } else {
+            write(nonChineseMode);
+        }
+    }
+
+    public void setCharCode2(int codePage) {
+        if(codePage == 255) {
+            byte[] thaiCharCode = new byte[] { 0x1b, 0x74, -1 };    // -1 equals to 255
+            write(thaiCharCode);
+        }
+    }
+
+    public void setCharSet(String charSet) {
+        this.charSet = charSet;
+    }
+
     public void print(String text) throws UnsupportedEncodingException {
         // TODO: get rid of GBK default!
-        write(text.getBytes("TIS620"));
+        //byte[] thaiCharCode = new byte[] { 0x1b, 0x74, -1 };    // -1 equals to 255
+        //write(thaiCharCode);
+        write(text.getBytes(this.charSet));
+        //write(text.getBytes());
     }
 
     public void printLn(String text) throws UnsupportedEncodingException {
@@ -119,6 +150,7 @@ public class PrinterService {
     public void printDesign(String text) throws IOException {
         ByteArrayOutputStream baos = generateDesignByteArrayOutputStream(text);
         write(baos.toByteArray());
+        //write(baos.toString().getBytes("CP874"));
     }
 
     public Bitmap readImage(String filePath, ReactApplicationContext reactContext) throws IOException {
@@ -130,12 +162,32 @@ public class PrinterService {
         return image;
     }
 
+    public Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            BitmapFactory.Options op = new BitmapFactory.Options();
+            op.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap image = BitmapFactory.decodeStream(input, null, op);
+            //Bitmap image = BitmapFactory.decodeStream(input);
+            return image;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
+    }
+
     public void printImage(String filePath) throws IOException {
-        printImage(readImage(filePath, context));
+        //printImage(readImage(filePath, context));
+        printImage(getBitmapFromURL(filePath));
     }
 
     public void printImage(String filePath, int widthOffset) throws IOException {
-        printImage(readImage(filePath, context), widthOffset);
+        //printImage(readImage(filePath, context), widthOffset);
+        printImage(getBitmapFromURL(filePath), widthOffset);
     }
 
     public void printImage(Bitmap image) throws IOException {
@@ -223,6 +275,9 @@ public class PrinterService {
         String line;
 
         while ((line = reader.readLine()) != null) {
+
+            //Log.i("line data", line);
+            
             byte[] qtToWrite = null;
             byte[] imageToWrite = null;
             byte[] bcToWrite = null;
@@ -339,7 +394,7 @@ public class PrinterService {
                 }
                 if (qtToWrite == null && imageToWrite == null && bcToWrite == null) {
                     // TODO: get rid of GBK default!
-                    baos.write(layoutBuilder.createFromDesign(line, charsOnLine).getBytes("GBK"));
+                    baos.write(layoutBuilder.createFromDesign(line, charsOnLine).getBytes(this.charSet));
                 }
             } catch (UnsupportedEncodingException e) {
                 // Do nothing?

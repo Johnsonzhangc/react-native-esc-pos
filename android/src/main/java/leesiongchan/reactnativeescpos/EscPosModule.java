@@ -317,6 +317,37 @@ public class EscPosModule extends ReactContextBaseJavaModule {
                 new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED));
     }
 
+
+    @ReactMethod
+    public void setCharSet(String charSet, Promise promise) {
+        try {
+            printerService.setCharSet(charSet);
+            promise.resolve(true);
+        } catch(Exception e) {
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void setCharCode2(int codePage, Promise promise) {
+        try {
+            printerService.setCharCode2(codePage);
+            promise.resolve(true);
+        } catch(Exception e) {
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void setChineseMode(boolean enable, Promise promise) {
+        try {
+            printerService.enableChineseMode(enable);
+            promise.resolve(true);
+        } catch(Exception e) {
+            promise.reject(e);
+        }
+    }
+
     /**
      * Bluetooth Connection Event Listener
      */
