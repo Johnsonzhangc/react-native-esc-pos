@@ -275,8 +275,6 @@ public class PrinterService {
         String line;
 
         while ((line = reader.readLine()) != null) {
-
-            //Log.i("line data", line);
             
             byte[] qtToWrite = null;
             byte[] imageToWrite = null;
