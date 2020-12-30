@@ -110,7 +110,7 @@ public class LayoutBuilder {
             return key + "\n" + StringUtils.rightPad("", charsOnLine - value.toCharArray().length, space) + value + "\n";
             //return createTextOnLine(key + ": " + value, ' ', TEXT_ALIGNMENT_LEFT, charsOnLine);
         }
-        Log.i("KKKKKKKKKKKKKKK", key + ": " + key.length().toString());
+        Log.d("KKKKKKKKKKKKKKK", key + ": " + key.length().toString());
         return StringUtils.rightPad(key, charsOnLine - value.toCharArray().length, space) + value + "\n";
     }
 
