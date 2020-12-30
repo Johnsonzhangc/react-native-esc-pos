@@ -328,6 +328,8 @@ public class PrinterService {
             boolean lsxl = line.contains("{LS:XL}");
             boolean ct = line.contains("{C}");
             boolean rt = line.contains("{R}");
+            boolean cut = line.contains("{CUTFULL}");
+            boolean beep = line.contains("{BEEP}")
             int charsOnLine = layoutBuilder.getCharsOnLine();
 
             // TODO: Shouldn't put it here
@@ -388,6 +390,14 @@ public class PrinterService {
             if (rt) {
                 baos.write(TXT_ALIGN_RT);
                 line = line.replace("{R}", "");
+            }
+            if (cut) {
+                baos.write(PAPER_FULL_CUT);
+                line = line.replace("{CUTFULL}", "");
+            }
+            if (beep) {
+                baos.write(BEEPER);
+                line = line.replace("{BEEP}", "");
             }
 
             try {
