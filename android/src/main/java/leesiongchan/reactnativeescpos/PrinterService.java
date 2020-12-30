@@ -342,7 +342,7 @@ public class PrinterService {
             byte[] DEFAULT_LINE_SPACE = new byte[] { 0x1b, 50 };
 
             baos.write(ESC_t);
-            baos.write(FS_and);
+            //baos.write(FS_and);
             baos.write(ESC_M);
 
             // Add tags
