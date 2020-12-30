@@ -108,22 +108,20 @@ public class LayoutBuilder {
     public String createMenuItem(String key, String value, char space, int charsOnLine) {
         int keyLength = 0;
         int valueLength = 0;
-        for(int i=0; i<key.length(); i++)
-        {
-            if(!this.isMark(key.charAt(i)))
-                keyLength++;
-        }
-        for(int i=0; i<value.length(); i++)
-        {
-            if(!this.isMark(value.charAt(i)))
-                valueLength++;
-        }
-        if (key.toCharArray().length + value.toCharArray().length + 2 > charsOnLine) {
+        int keyLengthDiffer = 0;
+        int valueLengthDiffer = 0;
+        for(int i=0; i<key.length(); i++){ if(!this.isMark(key.charAt(i))) keyLength++; }
+        for(int i=0; i<value.length(); i++){ if(!this.isMark(value.charAt(i))) valueLength++; }
+
+        keyLengthDiffer = key.length() - keyLength;
+        valueLengthDiffer = value.length() - valueLength;
+
+        if (keyLength + valueLength + 2 > charsOnLine) {
             int i = (keyLength + valueLength + 2) / charsOnLine;
             return key + "\n" + StringUtils.rightPad("", charsOnLine - valueLength, space) + value + "\n";
             //return createTextOnLine(key + ": " + value, ' ', TEXT_ALIGNMENT_LEFT, charsOnLine);
         }
-        return StringUtils.rightPad(key, charsOnLine - valueLength, space) + value + "\n";
+        return StringUtils.rightPad(key, charsOnLine + keyLengthDiffer - valueLength, space) + value + "\n";
     }
 
     public String createTextOnLine(String text, char space, String alignment) {
