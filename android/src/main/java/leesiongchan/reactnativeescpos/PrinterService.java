@@ -325,6 +325,7 @@ public class PrinterService {
             boolean h3 = line.contains("{H3}");
             boolean lsm = line.contains("{LS:M}");
             boolean lsl = line.contains("{LS:L}");
+            boolean lsxl = line.contains("{LS:XL}");
             boolean ct = line.contains("{C}");
             boolean rt = line.contains("{R}");
             int charsOnLine = layoutBuilder.getCharsOnLine();
@@ -375,6 +376,10 @@ public class PrinterService {
             } else if (lsl) {
                 baos.write(LINE_SPACE_30);
                 line = line.replace("{LS:L}", "");
+            }
+            if(lsxl) {
+                baos.write(LINE_SPACE_68);
+                line = line.replace("{LS:XL}", "");
             }
             if (ct) {
                 baos.write(TXT_ALIGN_CT);
