@@ -105,13 +105,13 @@ public class LayoutBuilder {
     }
 
     public String createMenuItem(String key, String value, char space, int charsOnLine) {
-        if (key.length() + value.length() + 2 > charsOnLine) {
-            int i = (key.length() + value.length() + 2) / charsOnLine;
-            return key + "\n" + StringUtils.rightPad("", charsOnLine - value.length(), space) + value + "\n";
+        if (key.toCharArray().length + value.toCharArray().length + 2 > charsOnLine) {
+            int i = (key.toCharArray().length + value.toCharArray().length + 2) / charsOnLine;
+            return key + "\n" + StringUtils.rightPad("", charsOnLine - value.toCharArray().length, space) + value + "\n";
             //return createTextOnLine(key + ": " + value, ' ', TEXT_ALIGNMENT_LEFT, charsOnLine);
         }
 
-        return StringUtils.rightPad(key, charsOnLine - value.length(), space) + value + "\n";
+        return StringUtils.rightPad(key, charsOnLine - value.toCharArray().length, space) + value + "\n";
     }
 
     public String createTextOnLine(String text, char space, String alignment) {
