@@ -347,7 +347,7 @@ public class PrinterService {
 
             //baos.write(ESC_t);
             //baos.write(FS_and);
-            //baos.write(ESC_M);
+            baos.write(ESC_M);
 
             // Add tags
             if (bold) {
