@@ -6,7 +6,6 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -111,7 +110,7 @@ public class LayoutBuilder {
             return key + "\n" + StringUtils.rightPad("", charsOnLine - value.toCharArray().length, space) + value + "\n";
             //return createTextOnLine(key + ": " + value, ' ', TEXT_ALIGNMENT_LEFT, charsOnLine);
         }
-        Log.d("KKKKKKKKKKKKKKK", key + ": " + key.length().toString());
+        System.out.println(key + ": " + key.length().toString());
         return StringUtils.rightPad(key, charsOnLine - value.toCharArray().length, space) + value + "\n";
     }
 
