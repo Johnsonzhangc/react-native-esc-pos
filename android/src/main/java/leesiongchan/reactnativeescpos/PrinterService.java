@@ -383,7 +383,7 @@ public class PrinterService {
                 line = line.replace("{LS:L}", "");
             }
             if(lsxl) {
-                baos.write(LINE_SPACE_68);
+                baos.write(LINE_SPACE_48);
                 line = line.replace("{LS:XL}", "");
             }
             if (ct) {
