@@ -301,7 +301,7 @@ public class PrinterService {
             if (imgMatcher.find()) {
                 try {
                     int offset = DEFAULT_IMG_WIDTH_OFFSET;
-                    if (imgMatcher.group(2).length() > 0) {
+                    if (imgMatcher.group(2) != null && imgMatcher.group(2).length() > 0) {
                         offset = Integer.parseInt(imgMatcher.group(1));
                     }
                     imageToWrite = generateImageByteArrayOutputStream(
