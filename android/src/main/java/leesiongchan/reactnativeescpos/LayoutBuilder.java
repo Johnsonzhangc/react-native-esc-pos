@@ -107,7 +107,7 @@ public class LayoutBuilder {
     public String createMenuItem(String key, String value, char space, int charsOnLine) {
         if (key.length() + value.length() + 2 > charsOnLine) {
             int i = (key.length() + value.length() + 2) / charsOnLine;
-            key = StringUtils.rightPad(key, charsOnLine * (i + 1) - value.length(), space);
+            return key + "\n" + StringUtils.rightPad('', charsOnLine - value.length(), space) + value + "\n";
             //return createTextOnLine(key + ": " + value, ' ', TEXT_ALIGNMENT_LEFT, charsOnLine);
         }
 
