@@ -330,6 +330,8 @@ public class PrinterService {
             boolean rt = line.contains("{R}");
             //boolean cut = line.contains("{CUTFULL}");
             //boolean beep = line.contains("{BEEP}");
+            boolean fontA = line.contains("{FONTA}");
+            boolean fontB = line.contains("{FONTB}");
             int charsOnLine = layoutBuilder.getCharsOnLine();
 
             // TODO: Shouldn't put it here
@@ -391,6 +393,14 @@ public class PrinterService {
             if (rt) {
                 baos.write(TXT_ALIGN_RT);
                 line = line.replace("{R}", "");
+            }
+            if (fontA) {
+                baos.write(TXT_FONT_A);
+                line = line.replace("{FONTA}", "");
+            }
+            if (fontB) {
+                baos.write(TXT_FONT_B);
+                line = line.replace("{FONTB}", "");
             }
 
             try {
