@@ -329,7 +329,7 @@ public class PrinterService {
             boolean ct = line.contains("{C}");
             boolean rt = line.contains("{R}");
             boolean cut = line.contains("{CUTFULL}");
-            boolean beep = line.contains("{BEEP}")
+            boolean beep = line.contains("{BEEP}");
             int charsOnLine = layoutBuilder.getCharsOnLine();
 
             // TODO: Shouldn't put it here
