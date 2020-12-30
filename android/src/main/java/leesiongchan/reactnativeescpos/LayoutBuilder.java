@@ -6,6 +6,7 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
