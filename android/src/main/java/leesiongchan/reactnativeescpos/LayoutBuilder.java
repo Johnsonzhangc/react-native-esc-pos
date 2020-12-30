@@ -6,6 +6,7 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.lang.Character;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -105,13 +106,24 @@ public class LayoutBuilder {
     }
 
     public String createMenuItem(String key, String value, char space, int charsOnLine) {
+        var keyLength = 0;
+        var valueLength = 0;
+        for(int i=0; i<key.length(); i++)
+        {
+            if(!this.isMark(key.charAt(i)))
+                keyLength++;
+        }
+        for(int i=0; i<value.length(); i++)
+        {
+            if(!this.isMark(value.charAt(i)))
+                valueLength++;
+        }
         if (key.toCharArray().length + value.toCharArray().length + 2 > charsOnLine) {
-            int i = (key.toCharArray().length + value.toCharArray().length + 2) / charsOnLine;
-            return key + "\n" + StringUtils.rightPad("", charsOnLine - value.toCharArray().length, space) + value + "\n";
+            int i = (keyLength + valueLength + 2) / charsOnLine;
+            return key + "\n" + StringUtils.rightPad("", charsOnLine - valueLength, space) + value + "\n";
             //return createTextOnLine(key + ": " + value, ' ', TEXT_ALIGNMENT_LEFT, charsOnLine);
         }
-        System.out.println(key + ": " + key.length().toString());
-        return StringUtils.rightPad(key, charsOnLine - value.toCharArray().length, space) + value + "\n";
+        return StringUtils.rightPad(key, charsOnLine - valueLength, space) + value + "\n";
     }
 
     public String createTextOnLine(String text, char space, String alignment) {
@@ -175,5 +187,12 @@ public class LayoutBuilder {
 
     public int getCharsOnLine() {
         return charsOnLine;
+    }
+
+    public boolean isMark(char ch){
+        int type = Character.getType(ch);
+        return type == Character.NON_SPACING_MARK ||
+               type == Character.ENCLOSING_MARK ||
+               type == Character.COMBINING_SPACING_MARK;
     }
 }
