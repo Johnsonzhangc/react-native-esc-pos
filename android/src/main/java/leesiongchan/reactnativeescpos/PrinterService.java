@@ -328,8 +328,8 @@ public class PrinterService {
             boolean lsxl = line.contains("{LS:XL}");
             boolean ct = line.contains("{C}");
             boolean rt = line.contains("{R}");
-            boolean cut = line.contains("{CUTFULL}");
-            boolean beep = line.contains("{BEEP}");
+            //boolean cut = line.contains("{CUTFULL}");
+            //boolean beep = line.contains("{BEEP}");
             int charsOnLine = layoutBuilder.getCharsOnLine();
 
             // TODO: Shouldn't put it here
@@ -340,6 +340,7 @@ public class PrinterService {
             byte[] TXT_4SQUARE_NEW = new byte[] { 0x1d, '!', 0x11 };
             byte[] TXT_2HEIGHT_NEW = new byte[] { 0x1d, '!', 0x01 };
             byte[] TXT_2WIDTH_NEW = new byte[] { 0x1d, '!', 0x10 };
+            byte[] LINE_SPACE_48 = new byte[] { 0x1b, 0x33, 48 };
             byte[] LINE_SPACE_68 = new byte[] { 0x1b, 0x33, 68 };
             byte[] LINE_SPACE_88 = new byte[] { 0x1b, 0x33, 120 };
             byte[] DEFAULT_LINE_SPACE = new byte[] { 0x1b, 50 };
@@ -364,7 +365,7 @@ public class PrinterService {
                 charsOnLine = charsOnLine / 2;
             } else if (h2) {
                 baos.write(TXT_2HEIGHT_NEW);
-                baos.write(LINE_SPACE_88);
+                baos.write(LINE_SPACE_48);
                 line = line.replace("{H2}", "");
             } else if (h3) {
                 baos.write(TXT_2WIDTH_NEW);
@@ -390,14 +391,6 @@ public class PrinterService {
             if (rt) {
                 baos.write(TXT_ALIGN_RT);
                 line = line.replace("{R}", "");
-            }
-            if (cut) {
-                baos.write(PAPER_FULL_CUT);
-                line = line.replace("{CUTFULL}", "");
-            }
-            if (beep) {
-                baos.write(BEEPER);
-                line = line.replace("{BEEP}", "");
             }
 
             try {
