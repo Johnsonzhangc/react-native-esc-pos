@@ -106,8 +106,8 @@ public class LayoutBuilder {
     }
 
     public String createMenuItem(String key, String value, char space, int charsOnLine) {
-        var keyLength = 0;
-        var valueLength = 0;
+        int keyLength = 0;
+        int valueLength = 0;
         for(int i=0; i<key.length(); i++)
         {
             if(!this.isMark(key.charAt(i)))
