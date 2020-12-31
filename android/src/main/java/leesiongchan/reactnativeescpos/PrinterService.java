@@ -367,11 +367,11 @@ public class PrinterService {
                 charsOnLine = charsOnLine / 2;
             } else if (h2) {
                 baos.write(TXT_2HEIGHT_NEW);
-                baos.write(LINE_SPACE_48);
+                //baos.write(LINE_SPACE_48);
                 line = line.replace("{H2}", "");
             } else if (h3) {
                 baos.write(TXT_2WIDTH_NEW);
-                baos.write(LINE_SPACE_48);
+                //baos.write(LINE_SPACE_48);
                 line = line.replace("{H3}", "");
                 charsOnLine = charsOnLine / 2;
             }
