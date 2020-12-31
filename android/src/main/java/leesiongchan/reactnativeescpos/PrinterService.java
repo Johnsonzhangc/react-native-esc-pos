@@ -41,7 +41,7 @@ public class PrinterService {
     private static final String CARRIAGE_RETURN = System.getProperty("line.separator");
     private LayoutBuilder layoutBuilder = new LayoutBuilder();
     private final int DEFAULT_QR_CODE_SIZE = 200;
-    private final int DEFAULT_IMG_MAX_HEIGHT = 500;
+    private final int DEFAULT_IMG_MAX_HEIGHT = 800;
     private final int DEFAULT_IMG_WIDTH_OFFSET = 0;
 
     private final int DEFAULT_BAR_CODE_HEIGHT = 120;
@@ -195,7 +195,7 @@ public class PrinterService {
     }
 
     public void printImage(Bitmap image) throws IOException {
-        image = EscPosHelper.resizeImage(image, printingWidth - DEFAULT_IMG_WIDTH_OFFSET, 500);
+        image = EscPosHelper.resizeImage(image, printingWidth - DEFAULT_IMG_WIDTH_OFFSET, DEFAULT_IMG_MAX_HEIGHT);
         ByteArrayOutputStream baos = generateImageByteArrayOutputStream(image);
         write(baos.toByteArray());
     }
