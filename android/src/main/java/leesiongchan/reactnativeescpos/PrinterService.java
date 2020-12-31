@@ -362,7 +362,7 @@ public class PrinterService {
             }
             if (h1) {
                 baos.write(TXT_4SQUARE_NEW);
-                baos.write(LINE_SPACE_48);
+                //baos.write(LINE_SPACE_48);
                 line = line.replace("{H1}", "");
                 charsOnLine = charsOnLine / 2;
             } else if (h2) {
